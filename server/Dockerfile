@@ -24,7 +24,7 @@ COPY package.json package-lock.json ./
 COPY src ./src
 COPY uploads ./uploads
 
-RUN mkdir -p uploads && chown -R appuser:appgroup /app
+RUN mkdir -p uploads/settings && chown -R appuser:appgroup /app
 
 USER 10001
 
