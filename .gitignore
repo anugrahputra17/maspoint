@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment (jangan commit secret)
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Build output
+client/dist/
+dist/
+
+# Uploads runtime (gambar produk/QRIS di server lokal)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test coverage
+coverage/

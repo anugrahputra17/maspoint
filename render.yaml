@@ -1,0 +1,39 @@
+# Render Blueprint — deploy backend + PostgreSQL
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Cara pakai:
+# 1. Push repo ke GitHub
+# 2. Render Dashboard → New → Blueprint → pilih repo
+# 3. Set CLIENT_URL manual ke URL Vercel setelah frontend live
+# 4. Jalankan database/schema.sql + seeds.sql di PostgreSQL Render
+
+databases:
+  - name: litepos-db
+    plan: free
+    databaseName: litepos
+    user: litepos
+
+services:
+  - type: web
+    name: litepos-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: litepos-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+      # Isi di Render setelah deploy Vercel, contoh:
+      # https://nama-proyek.vercel.app
