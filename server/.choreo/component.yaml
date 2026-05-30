@@ -1,6 +1,6 @@
 # Konfigurasi endpoint Choreo untuk LitePOS API
 # Docs: https://wso2.com/engineering-platform/developer-platform/docs/develop-components/configure-endpoints/
-schemaVersion: 1.1
+schemaVersion: 1.2
 
 endpoints:
   - name: litepos-api

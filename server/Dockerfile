@@ -13,7 +13,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# 🌟 UBAH: GID dan UID disetel ke 10001 (masuk range aman Choreo)
+# 🌟 TAMBAHKAN INI: Memperbaiki & menambal 2 celah keamanan bawaan OS Debian
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
 RUN addgroup --system --gid 10001 appgroup \
   && adduser --system --uid 10001 --gid 10001 --home /app appuser
 
@@ -24,7 +26,6 @@ COPY uploads ./uploads
 
 RUN mkdir -p uploads && chown -R appuser:appgroup /app
 
-# 🌟 UBAH: Gunakan ID angka 10001 secara langsung agar parser keamanan Choreo langsung lolos
 USER 10001
 
 EXPOSE 8080
