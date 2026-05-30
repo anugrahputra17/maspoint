@@ -1,0 +1,13 @@
+# Konfigurasi endpoint Choreo untuk LitePOS API
+# Docs: https://wso2.com/engineering-platform/developer-platform/docs/develop-components/configure-endpoints/
+schemaVersion: 1.1
+
+endpoints:
+  - name: litepos-api
+    displayName: LitePOS REST API
+    service:
+      basePath: /
+      port: 8080
+    type: REST
+    networkVisibilities:
+      - Public
