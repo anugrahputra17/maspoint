@@ -27,12 +27,14 @@ Panduan langkah demi langkah untuk deploy **backend** ke **Choreo Docker Service
 
 1. Supabase Dashboard → **Project Settings** → **Database**
 2. **Connection string** → mode **URI**
-3. Pilih **Session pooler** (port `5432`) atau **Transaction pooler** (port `6543`)
-4. Salin URL, contoh:
+3. **Pilih Transaction pooler (port `6543`)** — disarankan untuk Choreo/Docker (hindari error IPv6 `ENETUNREACH`)
+4. Salin URL **lengkap** (harus diawali `postgresql://`), contoh:
 
 ```text
-postgresql://postgres.xxxxx:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+postgresql://postgres.tyjgybknjsyrcfwpkjur:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
 ```
+
+> Jangan isi hanya hostname seperti `db.xxx.supabase.co` — harus URI penuh dengan user, password, host, port, database.
 
 5. Buat **JWT secret** acak (min. 32 karakter) untuk production
 
@@ -136,21 +138,29 @@ Buka: `http://localhost:8080/api/health`
 
 ---
 
-## 7. Setelah backend live (langkah berikutnya)
+## 7. Deploy frontend ke Vercel
 
-Saat deploy frontend ke **Vercel**:
+Panduan lengkap: **[DEPLOY-VERCEL.md](./DEPLOY-VERCEL.md)**
 
-```env
-VITE_API_URL=https://YOUR-CHOREO-URL/api
+Choreo menambahkan path gateway di Public URL, contoh:
+
+```text
+https://....choreoapis.dev/default/server/v1.0
 ```
 
-Lalu update di Choreo:
+Set di Vercel:
 
 ```env
-CLIENT_URL=https://nama-app.vercel.app
+VITE_API_URL=https://....choreoapis.dev/default/server/v1.0/api
 ```
 
-Redeploy backend agar CORS mengizinkan origin Vercel.
+Setelah Vercel live, update Choreo:
+
+```env
+CLIENT_URL=https://maspoint.vercel.app
+```
+
+Lalu **redeploy** backend agar CORS aktif.
 
 ---
 
@@ -161,6 +171,8 @@ Redeploy backend agar CORS mengizinkan origin Vercel.
 | Build gagal di Choreo | Pastikan context = `server`, Dockerfile ada, `package-lock.json` ter-commit |
 | Container crash / restart | Cek logs Choreo → Observability; biasanya `DATABASE_URL` salah |
 | `ECONNREFUSED` database | Pastikan Supabase project tidak paused; password URI sudah di-encode |
+| `ENETUNREACH` IPv6 `:5432` | Ganti ke **pooler** Supabase port **6543**; push kode `db.js` terbaru (IPv4 first); redeploy |
+| `DATABASE_URL` hanya hostname | Harus `postgresql://user:pass@host:port/db` |
 | SSL error PostgreSQL | Set `DATABASE_SSL=true` |
 | CORS error dari browser | Set `CLIENT_URL` ke URL Vercel exact (https, tanpa `/` di akhir) |
 | Port mismatch | `PORT=8080` di env **dan** `port: 8080` di `.choreo/component.yaml` |

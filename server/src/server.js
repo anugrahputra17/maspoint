@@ -16,12 +16,23 @@ const settingsRoutes = require('./routes/settingsRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+/** Normalisasi URL origin (CLIENT_URL tanpa https:// tetap valid) */
+const normalizeOrigin = (value) => {
+  if (!value) return null;
+  let url = String(value).trim();
+  if (!url) return null;
+  if (!/^https?:\/\//i.test(url)) {
+    url = `https://${url}`;
+  }
+  return url.replace(/\/+$/, '');
+};
+
 const getAllowedOrigins = () => {
   const origins = [
     process.env.CLIENT_URL,
     ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : []),
   ]
-    .map((o) => o?.trim())
+    .map(normalizeOrigin)
     .filter(Boolean);
   return [...new Set(origins)];
 };

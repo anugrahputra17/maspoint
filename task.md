@@ -217,8 +217,9 @@ Prioritas rendah — tidak menghalangi go-live:
 
 | Target | Panduan |
 |--------|---------|
-| **Backend Choreo + Supabase** (prioritas) | [DEPLOY-CHOREO.md](./DEPLOY-CHOREO.md) |
-| **Backend Render + Frontend Vercel** (alternatif) | [DEPLOY.md](./DEPLOY.md) |
+| **Backend Choreo + Supabase** | [DEPLOY-CHOREO.md](./DEPLOY-CHOREO.md) |
+| **Frontend Vercel** | [DEPLOY-VERCEL.md](./DEPLOY-VERCEL.md) |
+| **Backend Render** (alternatif) | [DEPLOY.md](./DEPLOY.md) |
 
 | Platform | Folder | Config |
 |----------|--------|--------|
