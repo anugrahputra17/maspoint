@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 
 const useSsl =
   process.env.DATABASE_SSL === 'true' ||
+  (process.env.DATABASE_URL && /supabase\.com/i.test(process.env.DATABASE_URL)) ||
   (process.env.NODE_ENV === 'production' && Boolean(process.env.DATABASE_URL));
 
 const poolConfig = process.env.DATABASE_URL

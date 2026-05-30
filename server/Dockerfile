@@ -13,8 +13,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 
-RUN addgroup --system --gid 1001 appgroup \
-  && adduser --system --uid 1001 --gid 1001 --home /app appuser
+# 🌟 UBAH: GID dan UID disetel ke 10001 (masuk range aman Choreo)
+RUN addgroup --system --gid 10001 appgroup \
+  && adduser --system --uid 10001 --gid 10001 --home /app appuser
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
@@ -23,7 +24,8 @@ COPY uploads ./uploads
 
 RUN mkdir -p uploads && chown -R appuser:appgroup /app
 
-USER appuser
+# 🌟 UBAH: Gunakan ID angka 10001 secara langsung agar parser keamanan Choreo langsung lolos
+USER 10001
 
 EXPOSE 8080
 

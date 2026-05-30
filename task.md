@@ -215,15 +215,17 @@ Prioritas rendah — tidak menghalangi go-live:
 
 ## Panduan Build & Production Deployment
 
-**Panduan lengkap:** lihat [DEPLOY.md](./DEPLOY.md) (Vercel + Render + GitHub).
+| Target | Panduan |
+|--------|---------|
+| **Backend Choreo + Supabase** (prioritas) | [DEPLOY-CHOREO.md](./DEPLOY-CHOREO.md) |
+| **Backend Render + Frontend Vercel** (alternatif) | [DEPLOY.md](./DEPLOY.md) |
 
 | Platform | Folder | Config |
 |----------|--------|--------|
-| Frontend | `client/` | `client/vercel.json`, env `VITE_API_URL` |
-| Backend | `server/` | `render.yaml`, env `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL` |
+| Backend Docker (Choreo) | `server/` | `Dockerfile`, `server/.choreo/component.yaml` |
+| Frontend (Vercel) | `client/` | `client/vercel.json`, env `VITE_API_URL` |
+| Database (Supabase) | — | `database/schema.sql`, `database/seeds.sql` |
 | CI opsional | — | `.github/workflows/ci.yml` |
-
-GitHub Actions **tidak wajib** untuk deploy — Vercel & Render auto-deploy dari push ke GitHub.
 
 ---
 
