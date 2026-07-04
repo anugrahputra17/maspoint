@@ -3,7 +3,7 @@ version: '3.8'
 services:
   server:
     # Ganti 'dockerhubusername' dengan username Docker Hub Anda yang asli
-    image: dockerhubusername/maspoint-server:latest
+    image: masput17/maspoint-backend:latest
     container_name: maspoint_server
     restart: always
     ports:

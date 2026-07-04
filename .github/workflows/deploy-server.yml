@@ -40,15 +40,6 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Copy docker-compose.yml to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || '22' }}
-          source: "server/docker-compose.yml"
-          target: "~/maspoint"
 
       - name: Execute SSH commands to deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -59,7 +50,6 @@ jobs:
           port: ${{ secrets.VPS_PORT || '22' }}
           script: |
             # Masuk ke direktori project di VPS
-            mkdir -p ~/maspoint/server
             cd ~/maspoint/server
             
             # Jika Docker Hub Anda diset ke private, Anda butuh login.
