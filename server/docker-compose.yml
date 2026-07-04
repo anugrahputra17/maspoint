@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  server:
+    # Ganti 'dockerhubusername' dengan username Docker Hub Anda yang asli
+    image: dockerhubusername/maspoint-server:latest
+    container_name: maspoint_server
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+    # Logging configuration (opsional) agar log tidak memenuhi disk
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
